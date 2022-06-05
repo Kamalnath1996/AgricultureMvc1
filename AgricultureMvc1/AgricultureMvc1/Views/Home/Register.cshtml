@@ -1,0 +1,134 @@
+﻿@model AgricultureMvc1.Models.User
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="breadcrumb-area mb-10">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="breadcrumb-container">
+                    <ul>
+                        <li><a href="/Home/Index"><i class="fa fa-home"></i> Home</a></li>
+                        <li class="active">Register</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-content mb-50">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-xs-12 col-lg-6 mb-30">
+                    <form method="post" class="form-horizontal form-wizard" encType="multipart/form-data">
+                        <div class="login-form">
+                            <h4 class="login-title">Register</h4>
+
+                            <div class="row">
+                                <div class="col-md-6 col-12 mb-20">
+                                    <label>First Name</label>
+                                    @Html.TextBoxFor(a => a.firstName, new { placeholder = "Your First Name", Type = "text", @class = "mb-0 required" })
+                                </div>
+                                <div class="col-md-6 col-12 mb-20">
+                                    <label>Last Name</label>
+                                    @Html.TextBoxFor(a => a.lastName, new { placeholder = "Your Last Name", Type = "text", @class = "mb-0 required" })
+                                </div>
+                                <div class="col-md-12 mb-20">
+                                    <label>Email Address*</label>
+                                    @Html.TextBoxFor(a => a.email, new { placeholder = "example@example.com", Type = "email", @class = "required" })
+                                </div>
+                                <div class="col-md-6 mb-20">
+                                    <label>Password</label>
+                                    @Html.TextBoxFor(a => a.password, new { placeholder = "********", Type = "password", @class = "mb-0 required Password" })
+                                </div>
+                                <div class="col-md-6 mb-20">
+                                    <label>Confirm Password</label>
+                                    @Html.TextBoxFor(a => a.password, new { placeholder = "********", Type = "password", @class = "mb-0 required cPassword" })
+                                </div>
+                                @if (Request.QueryString["UserType"] == "Farmer")
+                                {
+                                    <div class="col-md-6 mb-20">
+                                        <label>State</label>
+                                        @Html.TextBoxFor(a => a.State, new { @class = "mb-0 required" })
+                                    </div>
+                                    <div class="col-md-6 mb-20">
+                                        <label>City</label>
+                                        @Html.TextBoxFor(a => a.City, new { @class = "mb-0 required" })
+                                    </div>
+                                    <div class="col-md-6 mb-20">
+                                        <label>Locality</label>
+                                        @Html.TextBoxFor(a => a.Locality, new { @class = "mb-0 required" })
+                                    </div>
+                                }
+                                <div class="col-12">
+                                    <input type="submit" id="btn_register" name="btname" class="register-button mt-0" value="Register" />
+                                </div>
+                            </div>
+                        </div>
+                    </form>               
+            </div>
+            <div class="col-sm-12 col-md-12 col-xs-12 col-lg-6">
+                <form action="#">
+                    <div class="login-form">
+                        <h4 class="login-title">Register</h4>
+
+                        <div class="row">
+                            <div class="col-md-12 mb-20">
+                                <p>
+                                    By creating an account you will be able to shop faster, be up to date on an order's status, and keep track of the orders you have previously made.
+                                </p>
+                            </div>
+                            <div class="col-6">
+                                <a href="/Home/Login?UserType=Farmer" class="register-button mt-0">Login as Farmer</a>
+                            </div>
+                            <div class="col-6">
+                                <a href="/Home/Login?UserType=Customer" class="register-button mt-0">Login as Buyer</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+}
+@section script{
+    <script>
+        var valid = false;
+        $('.form-wizard').on('submit', function (e) {            
+            $(this).find('.required').each(function () {
+                if ($(this).val() == "") {
+                    e.preventDefault();
+                    $(this).attr('style', 'border-color: red');
+                    valid = false;
+                }
+                else {
+                    valid = true;
+                    $(this).removeAttr('style', 'border-color: red');
+                }
+            });
+            var Password = $('.Password').val();
+            var cPassword = $('.cPassword').val();
+            if (Password != cPassword) {
+                valid = false;
+                $('.Password').attr('style', 'border-color: red');
+                $('.cPassword').attr('style', 'border-color: red');
+                e.preventDefault();
+                alert('Password not Match');
+            }else
+        {
+         $('.Password').removeAttr('style');
+                $('.cPassword').removeAttr('style');
+                valid = true;
+        }
+        });
+
+    </script>
+}

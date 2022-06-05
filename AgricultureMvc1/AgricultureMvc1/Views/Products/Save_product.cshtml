@@ -1,0 +1,161 @@
+﻿@model AgricultureMvc1.Models.Product
+@{
+    ViewBag.Title = "Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    ViewBag.Title = "Save_product";
+}
+<div class="breadcrumb-area mb-10">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="breadcrumb-container">
+                    <ul>
+                        <li><a href="/Home/Index"><i class="fa fa-home"></i> Home</a></li>
+                        <li class="active">Save Product</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-content mb-50">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-xs-12 col-lg-4 mb-30">
+                <form method="post" class="form-horizontal form-wizard" encType="multipart/form-data">
+                    <div class="login-form">
+                        <h4 class="login-title">Save Product</h4>
+                        @Html.TextBoxFor(a => a.Id, new { Type = "hidden", @class = "mb-0" })
+                        <div class="row">
+                            <div class="col-md-12 mb-20">
+                                <label>Category</label>
+                                @Html.DropDownListFor(a => a.categoryId, new SelectList(ViewBag.categories, "Id", "categoryName"), "Select Category", new { @class = "form-control dropdown required" })
+                            </div>
+                            <div class="col-md-12 col-12 mb-20">
+                                <label>Product Name*</label>
+                                @Html.TextBoxFor(a => a.productName, new { placeholder = "Product Name", Type = "text", @class = "mb-0 required" })
+                            </div>
+                            <div class="col-md-12 col-12 mb-20">
+                                <label>Product Image*</label>
+                                @Html.TextBoxFor(a => a.productImage, new { placeholder = "Product Image", Type = "file", @class = "mb-0 required" })
+                            </div>
+                            <div class="col-md-12 col-12 mb-20">
+                                <label>Product Price*</label>
+                                @Html.TextBoxFor(a => a.productPrice, new { placeholder = "Product Price", Type = "text", @class = "required" })
+                            </div>
+                            <div class="col-md-12 mb-20">
+                                <label>Product Quantiy*</label>
+                                @Html.TextBoxFor(a => a.productQuantity, new { placeholder = "Product Quantiy", Type = "number", @class = "mb-0 required" })
+                            </div>
+                            <div class="col-md-8 mb-20">
+                                <label>Product Weight*</label>
+                                @Html.TextBoxFor(a => a.productWeight, new { placeholder = "Product Weight", Type = "text", @class = "mb-0 required" })
+                            </div>
+                            <div class="col-md-4 mb-20">
+                                <br />
+                                <br />
+                                @Html.DropDownListFor(a => a.productUnit, new List<SelectListItem> {
+                   new SelectListItem { Value = "G" , Text = "G" },
+                   new SelectListItem { Value = "KG" , Text = "K" }
+                }, new { @class = "form-control dropdown" })
+                            </div>
+                            <div class="col-12">
+                                <input type="submit" id="btn_register" name="btname" class="register-button mt-0" value="Save" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-12 col-md-12 col-xs-12 col-lg-8">
+                <form action="#">
+                    <div class="login-form">
+                        <h4 class="login-title">Product List</h4>
+
+                        <div class="row">
+                            <div class="col-md-12 mb-20">
+                                <table id="myTable" class="table table-striped table-hover no-border">
+                                    <thead>
+                                        <tr>
+                                            <th>Sl No.</th>
+                                            <th>Name</th>
+                                            <th>Info</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (ViewBag.Products != null)
+                                        {
+                                            int i = 1;
+                                            foreach (var item in ViewBag.Products)
+                                            {
+                                                <tr>
+                                                    <td>@i</td>
+                                                    <td>@item.productName</td>
+                                                    <td>
+                                                        Category :@item.ProductCategory <br />
+                                                        Price :@item.productPrice <br />
+                                                        Weight :@item.productWeight @item.productUnit <br />
+                                                        Quantity :@item.productQuantity
+                                                    </td>
+                                                    <td>
+                                                        <a class="btn btn-success" href="/Products/Save_product?ProductId=@item.Id">Edit</a>
+                                                        <a class="btn btn-danger" href="/Products/Delete_product?ProductId=@item.Id">Delete</a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-12">
+                                <a href="/Products/FarmerMarket" class="register-button mt-0">Farmer's Market</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+}
+@section script{
+    <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <link href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
+    <script>
+        var valid = false;
+        $('.form-wizard').on('submit', function (e) {
+            $(this).find('.required').each(function () {
+                if ($(this).val() == "") {
+                    e.preventDefault();
+                    $(this).attr('style', 'border-color: red');
+                    valid = false;
+                }
+                else {
+                    valid = true;
+                    $(this).removeAttr('style', 'border-color: red');
+                }
+            });
+        });
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+
+
+        $('#productPrice').keyup(function () {
+            this.value = this.value.replace(/[^0-9\.]/g, '');
+        });
+        $('#productWeight').keyup(function () {
+            this.value = this.value.replace(/[^0-9\.]/g, '');
+        });
+    </script>
+}
+

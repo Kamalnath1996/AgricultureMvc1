@@ -1,0 +1,66 @@
+﻿@model List<AgricultureMvc1.Models.Product>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="breadcrumb-area mb-50">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="breadcrumb-container">
+                    <ul>
+                        <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+                        <li class="active">Farmer's market</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="shop-page-container mb-50">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 order-1 order-lg-2 mb-sm-35 mb-xs-35">
+                <div class="shop-header mb-35">
+                <div class="shop-product-wrap grid row no-gutters mb-35">
+                    @if (Model.Count > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+                                <div class="gf-product shop-grid-view-product">
+                                    <div class="image">
+                                        <a href='javascript:void()'>
+                                            <img src="@item.productImage" style="height:200px" class="img-fluid" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="product-content">
+                                        <div class="product-categories">
+                                            <a href="shop-left-sidebar.html">@item.ProductCategory</a>
+                                        </div>
+                                        <h3 class="product-title"><a href="#">@item.productName</a></h3>
+                                        <div class="price-box">
+                                                <span class="discounted-price"> @item.productPrice</span>
+                                        </div>
+                                        <button class="btn btn-primary btn-small form-control" data-title="+To Cart" onclick="location.href='/Products/Add_Cart?ProductId='+@item.Id" data-placement="top" data-toggle="tooltip">
+                                            <i class="icon-shopping-cart"><span>&nbsp; ADD TO CART</span></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="gf-product shop-grid-view-product">
+                                <div class="product-content">
+                                    <h3 class="product-title">No Products Avaiable.....!</h3>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

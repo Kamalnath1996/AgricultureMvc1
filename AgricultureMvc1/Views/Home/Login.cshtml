@@ -1,0 +1,116 @@
+﻿@model AgricultureMvc1.Models.User
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (TempData["message"] != null)
+{
+    <script>
+        alert('@TempData["message"]');
+    </script>
+}
+
+<div class="breadcrumb-area mb-10">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="breadcrumb-container">
+                    <ul>
+                        <li><a href="/Home/Index"><i class="fa fa-home"></i> Home</a></li>
+                        <li class="active">Login</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-content mb-50">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-xs-12 col-lg-6 mb-30">
+                <!-- Login Form s-->
+                <form method="post" id="frmLogin">
+                    <div class="login-form">
+                        <h4 class="login-title">Login</h4>
+                        <div class="row">
+                            <div class="col-md-12 col-12 mb-20">
+                                <label>Email Address*</label>
+                                @Html.TextBoxFor(m => m.email, new { @id = "txtemail", @class = "mb-0", @placeholder = "Email Address" })
+                            </div>
+                            <div class="col-12 mb-20">
+                                <label>Password</label>
+                                @Html.TextBoxFor(m => m.password, "", new { @id = "txtpassword", @class = "mb-0", @placeholder = "Enter Password", @type = "password" })
+                            </div>
+                            <div class="col-md-12 mb-20">
+                                <button class="register-button mt-0">Login</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-12 col-md-12 col-xs-12 col-lg-6">
+                <form action="#">
+
+                    <div class="login-form">
+                        <h4 class="login-title">Register</h4>
+
+                        <div class="row">
+                            <div class="col-md-12 mb-20">
+                                <p>
+                                    By creating an account you will be able to shop faster, be up to date on an order's status, and keep track of the orders you have previously made.
+                                </p>
+                            </div>
+                            <div class="col-6">
+                                <a href="/Home/Register?UserType=Farmer" class="register-button mt-0">Register as Farmer</a>
+                            </div>
+                            <div class="col-6">
+                                <a href="/Home/Register?UserType=Customer" class="register-button mt-0">Register as Buyer</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+}
+@section script{
+    <script>
+        $('#frmLogin').click(function (e){
+        var result = true;
+            if(e.target.type == 'submit')
+            {
+                var email = $('#txtemail').val();
+                var password = $('#txtpassword').val();
+        if(email == '')
+        {
+        $('#txtemail').attr('style','border-color:red');
+            result = false;
+        }else
+        {
+        $('#txtemail').removeAttr('style');
+        }
+        if(password == '')
+        {
+        $('#txtpassword').attr('style','border-color:red');
+            result = false;
+        }else
+        {
+        $('#txtpassword').removeAttr('style');
+        }
+        if(!result)
+        {
+       e.preventDefault();
+        }
+            }
+        });
+    </script>
+}

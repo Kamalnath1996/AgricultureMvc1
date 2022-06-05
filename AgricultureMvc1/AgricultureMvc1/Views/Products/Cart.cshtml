@@ -1,0 +1,122 @@
+﻿@model List<AgricultureMvc1.Models.Cart>
+@{
+    ViewBag.Title = "Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (TempData["message"] != null)
+{
+    <script>
+        alert('@TempData["message"]');
+    </script>
+}
+<div class="breadcrumb-area mb-10">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="breadcrumb-container">
+                    <ul>
+                        <li><a href="/Home/Index"><i class="fa fa-home"></i> Home</a></li>
+                        <li class="active">Cart</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-section section mb-10">
+    <div class="container-fluid">
+        <div class="row">
+            @if (Model.Count > 0)
+            {
+                <div class="col-md-8">
+                    <form action="#">
+                        <div class="cart-table table-responsive mb-40">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="pro-thumbnail">Image</th>
+                                        <th class="pro-title">Product</th>
+                                        <th class="pro-price" style="min-width:95px">Price</th>
+                                        <th class="pro-quantity">Quantity</th>
+                                        <th class="pro-subtotal">Total</th>
+                                        <th class="pro-remove">Remove</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.Count > 0)
+                                    {
+                                        foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td class="pro-thumbnail"><a href="javascript:void()"><img src="@item.productimage" class="img-fluid" alt="Product"></a></td>
+                                                <td class="pro-title"><a href="javascript:void()">@item.productName</a></td>
+                                                <td class="pro-price"><span><i class="fa fa-inr"></i>@item.productPrice</span></td>
+                                                <td class="pro-quantity" style="min-width:168px">
+                                                    <a class="btn btn-danger" href="/Products/remove_product_count?ProductId=@item.productId">-</a>
+                                                    <div class="pro-qty">
+                                                        <input type="text" value="@item.quantity">
+                                                    </div>
+                                                    <a class="btn btn-success" href="/Products/add_product_count?ProductId=@item.productId">+</a>
+                                                </td>
+                                                <td class="pro-subtotal"><span><i class="fa fa-inr"></i>@( item.productPrice * item.quantity)</span></td>
+                                                <td class="pro-remove">
+                                                    <a class="btn btn-small btn-danger" href="/Products/delete_Cart?CartId=@item.Id"><i class="fa fa-trash-o"></i></a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-4 d-flex">
+                    <div class="row">
+                        <div class="cart-summary">
+                            <div class="cart-summary-wrap">
+                                <h4>Cart Summary</h4>
+                                <p>Sub Total <span><i class="fa fa-inr"></i>@Model[0].SubTotal</span></p>
+                                <p>Payment Method<span><i class="fa"></i>Cash on Delivery</span></p>
+                                <h2>Grand Total 
+                                <span>
+                                <i class="fa fa-inr"></i> 
+                                        @Model[0].Total
+                                </span>
+                                </h2>
+                            </div>
+                        </div>
+                        <div class="cart-summary">
+                            <div class="cart-summary-wrap">
+                                <div class="cart-summary-button">
+                                    <div class="row col-md-12">
+                                        <div class="col-md-7">
+                                            <button onclick="location.href='/Products/Place_Order?amount=@Model[0].Total'" class="checkout-btn">Place Order</button>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <button onclick="location.href = '/Products/FarmerMarket'" class="update-btn">Update Cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><img src="~/Assets1/Images/no-product.png" /></td>
+                            </tr>
+                            <tr><td><a href="/Products/FarmerMarket" class="btn btn-primary" style="width:100%">Start Shopping</a></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

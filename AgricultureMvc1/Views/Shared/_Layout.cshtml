@@ -1,0 +1,259 @@
+﻿<!DOCTYPE html>
+<html class="no-js" lang="zxx">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>E-Farming</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="~/Assets1/Images/agriculture.png">
+    <link href="~/Assets1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Assets1/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Assets1/css/elegent.min.css" rel="stylesheet">
+    <link href="~/Assets1/css/plugins.css" rel="stylesheet">
+    <link href="~/Assets1/css/helper.css" rel="stylesheet">
+    <link href="~/Assets1/css/main.css" rel="stylesheet">
+    <script src="~/Assets1/js/vendor/modernizr-2.8.3.min.js"></script>
+    <style>
+        #autocomplete {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .autocomplete-input{border:1px solid #eee;border-radius:8px;width:100%;padding:12px 12px 12px 48px;box-sizing:border-box;position:relative;font-size:16px;line-height:1.5;flex:1;background-color:#eee;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNjY2IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGNpcmNsZSBjeD0iMTEiIGN5PSIxMSIgcj0iOCIvPjxwYXRoIGQ9Ik0yMSAyMWwtNC00Ii8+PC9zdmc+");background-repeat:no-repeat;background-position:12px}.autocomplete-input:focus,.autocomplete-input[aria-expanded=true]{border-color:rgba(0,0,0,.12);background-color:#fff;outline:none;box-shadow:0 2px 2px rgba(0,0,0,.16)}[data-position=below] .autocomplete-input[aria-expanded=true]{border-bottom-color:transparent;border-radius:8px 8px 0 0}[data-position=above] .autocomplete-input[aria-expanded=true]{border-top-color:transparent;border-radius:0 0 8px 8px;z-index:2}.autocomplete[data-loading=true]:after{content:"";border:3px solid rgba(0,0,0,.12);border-right-color:rgba(0,0,0,.48);border-radius:100%;width:20px;height:20px;position:absolute;right:12px;top:50%;transform:translateY(-50%);animation:rotate 1s linear infinite}.autocomplete-result-list{margin:0;border:1px solid rgba(0,0,0,.12);padding:0;box-sizing:border-box;max-height:296px;overflow-y:auto;background:#fff;list-style:none;box-shadow:0 2px 2px rgba(0,0,0,.16)}[data-position=below] .autocomplete-result-list{margin-top:-1px;border-top-color:transparent;border-radius:0 0 8px 8px;padding-bottom:8px}[data-position=above] .autocomplete-result-list{margin-bottom:-1px;border-bottom-color:transparent;border-radius:8px 8px 0 0;padding-top:8px}.autocomplete-result{cursor:default;padding:12px 12px 12px 48px;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjY2NjIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGNpcmNsZSBjeD0iMTEiIGN5PSIxMSIgcj0iOCIvPjxwYXRoIGQ9Ik0yMSAyMWwtNC00Ii8+PC9zdmc+");background-repeat:no-repeat;background-position:12px}.autocomplete-result:hover,.autocomplete-result[aria-selected=true]{background-color:rgba(0,0,0,.06)}@@keyframes rotate{0%{transform:translateY(-50%) rotate(0deg)}to{transform:translateY(-50%) rotate(359deg)}}
+    </style>
+    @RenderSection("style",false)
+</head>
+<body>
+    <header>
+        <div class="header-bottom header-bottom-one header-sticky">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 col-sm-12 col-xs-12 text-lg-left text-md-center text-sm-center">
+                        <div class="logo mt-15 mb-15">
+                            <a href="/Home/index">
+                                <img src="~/Assets1/Images/agriculture.png" style="height:100px; width:100px" class="img-fluid" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-9 col-sm-12 col-xs-12">
+                        <br />
+                        <br />
+                        <div class="menubar-top d-flex justify-content-between align-items-center flex-sm-wrap flex-md-wrap flex-lg-nowrap mt-sm-15">
+                            <div class="main-menu">
+                                <nav>
+                                    <ul>
+                                        <li>
+                                            <a href="/Home/Index">Home</a>
+                                        </li>@if (Session["role"] != null && Session["role"].ToString() == "2")
+                                        {
+                                            <li>
+                                                <a href="/Products/Save_product">Add Product</a>
+                                            </li>
+                                        }
+                                        <li class="menu-item-has-children">
+                                            <a href="#">Category</a>
+                                            <ul class="sub-menu categories">
+                                                <li><a href="/Products/FarmerMarket?categories_id=0">ALL</a></li>
+                                            </ul>
+                                        </li>
+                                        
+                                        @if (Session["UserId"] != null)
+                                        {
+                                            <li><a href="/Home/SignOut"><i class="fa fa-sign-out"></i> Logout</a></li>
+                                        }
+                                        else
+                                        {
+                                            <li class="menu-item-has-children">
+                                                <a href="#">Login</a>
+                                                <ul class="sub-menu">
+                                                    <li><a href="/Home/Login?UserType=Farmer"> Login as Farmer</a></li>
+                                                    <li><a href="/Home/Login?UserType=Customer"> Login as Buyer</a></li>
+                                                </ul>
+                                            </li>
+                                        }
+                                    </ul>
+                                </nav>
+                            </div>
+                            <div class="shopping-cart" id="shopping-cart">
+                                <a href="/Products/Cart" data-toggle="tooltip" data-placement="top" title="Cart">
+                                    <div class="cart-icon d-inline-block">
+                                        <span class="icon_cart"></span>
+                                    </div>
+                                </a>
+                                <a href="/Home/MyAccount" data-toggle="tooltip" data-placement="top" title="My Account">
+                                    <div class="cart-icon d-inline-block">
+                                        <span class="social_myspace_circle"></span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="mobile-menu d-block d-lg-none"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    @RenderBody()
+    <footer>
+        @*<div class="newsletter-section pt-50 pb-50">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-12 col-sm-12 mb-sm-20 mb-xs-20">
+                            <div class="newsletter-title">
+                                <h1>
+                                    <img src="~/Assets1/images/icon-newsletter.png" alt="">
+                                    Send Newsletter
+                                </h1>
+                            </div>
+                        </div>
+                        <div class="col-lg-8 col-md-12 col-sm-12">
+                            <div class="subscription-form-wrapper d-flex flex-wrap flex-sm-nowrap">
+                                <p class="mb-xs-20">Sign up for our newsletter to get up-to-date from us</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+        <div class="social-contact-section pt-50 pb-50">
+            <div class="container">
+                <div class="row">
+                    @*<div class="col-lg-4 col-md-12 order-2 order-md-2 order-sm-2 order-lg-1">
+                            <div class="social-media-section">
+                                <h2>Follow us</h2>
+                                <div class="social-links">
+                                    <a class="facebook" href="http://www.facebook.com/" data-tooltip="Facebook"><i class="fa fa-facebook"></i></a>
+                                    <a class="twitter" href="http://www.twitter.com/" data-tooltip="Twitter"><i class="fa fa-twitter"></i></a>
+                                    <a class="instagram" href="http://www.instagram.com/" data-tooltip="Instagram"><i class="fa fa-instagram"></i></a>
+                                    <a class="linkedin" href="http://www.linkedin.com/" data-tooltip="Linkedin"><i class="fa fa-linkedin"></i></a>
+                                    <a class="rss" href="http://www.rss.com/" data-tooltip="RSS"><i class="fa fa-rss"></i></a>
+                                </div>
+                            </div>
+                        </div>*@
+                    <div class="col-lg-8 col-md-12 order-1 order-md-1 order-sm-1 order-lg-2  mb-sm-50 mb-xs-50">
+                        <div class="contact-summery">
+                            <h2>Contact us</h2>
+                            <div class="contact-segments d-flex justify-content-between flex-wrap flex-lg-nowrap">
+                                <div class="single-contact d-flex mb-xs-20">
+                                    <div class="icon">
+                                        <span class="icon_pin_alt"></span>
+                                    </div>
+                                    <div class="contact-info">
+                                        <p>Address: <span>CRPF SQUARE 751012 Bhubanesawr</span></p>
+                                    </div>
+                                </div>
+                                <div class="single-contact d-flex mb-xs-20">
+                                    <div class="icon">
+                                        <span class="icon_mobile"></span>
+                                    </div>
+                                    <div class="contact-info">
+                                        <p>Phone: <span>+(91) 123 456 232</span></p>
+                                    </div>
+                                </div>
+                                <div class="single-contact d-flex">
+                                    <div class="icon">
+                                        <span class="icon_mail_alt"></span>
+                                    </div>
+                                    <div class="contact-info">
+                                        <p>Email: <span>efarming123@gmail.com</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-navigation-section pt-40 pb-40">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb-xs-30">
+                        <div class="single-navigation-section">
+                            <h3 class="nav-section-title">INFORMATION</h3>
+                            <ul>
+                                @*<li> <a href="/Category/Entertainment">Entertainment</a></li>*@
+                                <li><a href="javascript:void()" class="active">Home</a></li>
+                                <li><a href="javascript:void()">About Us</a></li>
+                                <li><a href="javascript:void()">Categories</a></li>
+                                <li><a href="javascript:void()">Farmers Market</a></li>
+                                <li><a href="javascript:void()">Contact Us</a></li>
+                                <li><a href="javascript:void()">Login</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb-xs-30">
+                        <div class="single-navigation-section" style="color:white">
+                            <h3 class="nav-section-title">About E-Farming</h3>
+                            <ul>
+                                <li>
+                                    E farming is a project developed to build a website which will help farmer from to sell their products to different cities through oonline.
+                                    buyer and seller can directly register in the site and sell/buy their product.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb-xs-30">
+                        <div class="single-navigation-section">
+                            <h3 class="nav-section-title">Business Time</h3>
+                            <ul>
+                                <li> Monday-Friday:08:00 AM TO 05:00 PM</li>
+                                <li>Sunday:Closed</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright-section pt-35 pb-35">
+            <div class="container">
+                <div class="row align-items-md-center align-items-sm-center">
+                    <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 text-center text-md-left">
+                        <!--=======  copyright text	  =======-->
+
+                        <div class="copyright-segment">
+                            <p>
+                                <a href="#">Privacy Policy</a>
+                                <span class="separator">|</span>
+                                <a href="#">Term and conditions</a>
+                            </p>
+                            <p class="copyright-text">&copy; 2019 <a href="https://demo.hasthemes.com/">Sysoft Technologies</a>. All Rights Reserved</p>
+                        </div>
+
+                        <!--=======  End of copyright text	  =======-->
+
+                    </div>
+                    <div class="col-lg-8 col-md-6 col-sm-12 col-xs-12">
+                        <!--=======  payment info  =======-->
+
+                        <div class="payment-info text-center text-md-right">
+                            <p>Allow payment base on <img src="~/Assets1/images/payment-icon.png" class="img-fluid" alt=""></p>
+                        </div>
+
+                        <!--=======  End of payment info  =======-->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <a href="#" class="scroll-top"></a>
+    <script src="~/Assets1/js/vendor/jquery.min.js"></script>
+    <script src="~/Assets1/js/popper.min.js"></script>
+    <script src="~/Assets1/js/bootstrap.min.js"></script>
+    <script src="~/Assets1/js/plugins.js"></script>
+    <script src="~/Assets1/js/main.js"></script>
+    @RenderSection("script", false)
+        <script>
+            var catUrl = "/Home/Cateories"
+            $(document).ready(function () {
+                $.getJSON(catUrl, {}, function(response)
+                {
+                    for (var i = 0; i < response.length; i++) {
+                        $(".categories").append('<li><a href="/Products/FarmerMarket?categories_id=' + response[i].Id + '">' + response[i].categoryName + '</a></li>');
+                    }
+                });
+            });
+        </script>
+</body>
+</html>
